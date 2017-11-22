@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+
+	<bean id="exampleBean" class="cn.home.modules.beans.entity.ExampleBean">
+		<constructor-arg type="int" value="7500000" />
+		<constructor-arg type="java.lang.String" value="42" />
+	</bean>
+
+	<bean id="exampleBean" class="cn.home.modules.beans.entity.ExampleBean">
+		<constructor-arg index="0" value="7500000" />
+		<constructor-arg index="1" value="42" />
+	</bean>
+
+
+	<bean id="exampleBean" class="cn.home.modules.beans.entity.ExampleBean">
+		<constructor-arg name="years" value="7500000" />
+		<constructor-arg name="ultimateanswer" value="42" />
+	</bean>
+
+
+	<bean id="exampleBeanRef" class="cn.home.modules.beans.entity.ExampleBeanRef">
+
+		<!-- constructor injection using the nested <ref/> element -->
+		<constructor-arg>
+			<ref bean="anotherExampleBean" />
+		</constructor-arg>
+
+		<!-- constructor injection using the neater 'ref' attribute -->
+		<constructor-arg ref="yetAnotherBean" />
+
+		<constructor-arg type="int" value="1" />
+	</bean>
+
+	<bean id="anotherExampleBean" class="cn.home.modules.beans.entity.AnotherBean" />
+	<bean id="yetAnotherBean" class="cn.home.modules.beans.entity.YetAnotherBean" />
+</beans>

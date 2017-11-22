@@ -1,0 +1,6 @@
+WebApplicationContext 
+BeanFactory 
+
+ClassPathXmlApplicationContext
+
+FileSystemXmlApplicationContext

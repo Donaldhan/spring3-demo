@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="..." class="...">
+		<!-- collaborators and configuration for this bean go here -->
+	</bean>
+
+	<bean id="..." class="...">
+		<!-- collaborators and configuration for this bean go here -->
+	</bean>
+
+	<!-- more bean definitions go here -->
+
+	<!-- services -->
+
+	<bean id="petStore"
+		class="org.springframework.samples.jpetstore.services.PetStoreServiceImpl">
+		<property name="accountDao" ref="accountDao" />
+		<property name="itemDao" ref="itemDao" />
+		<!-- additional collaborators and configuration for this bean go here -->
+	</bean>
+
+	<!-- more bean definitions for services go here -->
+
+	<import resource="services.xml" />
+	<import resource="resources/messageSource.xml" />
+	<import resource="/resources/themeSource.xml" />
+
+	<bean id="bean1" class="..." />
+	<bean id="bean2" class="..." />
+
+	<bean id="foo" class="x.y.Foo">
+		<constructor-arg ref="bar" />
+		<constructor-arg ref="baz" />
+	</bean>
+
+	<bean id="bar" class="x.y.Bar" />
+	<bean id="baz" class="x.y.Baz" />
+
+	<bean id="exampleBean" class="cn.home.modules.beans.entity.ExampleBean">
+		<constructor-arg type="int" value="7500000" />
+		<constructor-arg type="java.lang.String" value="42" />
+	</bean>
+
+	<bean id="exampleBean" class="cn.home.modules.beans.entity.ExampleBean">
+		<constructor-arg index="0" value="7500000" />
+		<constructor-arg index="1" value="42" />
+	</bean>
+
+
+	<bean id="exampleBean" class="cn.home.modules.beans.entity.ExampleBean">
+		<constructor-arg name="years" value="7500000" />
+		<constructor-arg name="ultimateanswer" value="42" />
+	</bean>
+
+
+	<bean id="exampleBeanRef" class="cn.home.modules.beans.entity.ExampleBeanRef">
+
+		<!-- constructor injection using the nested <ref/> element -->
+		<constructor-arg>
+			<ref bean="anotherExampleBean" />
+		</constructor-arg>
+
+		<!-- constructor injection using the neater 'ref' attribute -->
+		<constructor-arg ref="yetAnotherBean" />
+
+		<constructor-arg type="int" value="1" />
+	</bean>
+
+	<bean id="anotherExampleBean" class="cn.home.modules.beans.entity.AnotherBean" />
+	<bean id="yetAnotherBean" class="cn.home.modules.beans.entity.YetAnotherBean" />
+
+
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+
+		<!-- results in a setDriverClassName(String) call -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/mydb" />
+		<property name="username" value="root" />
+		<property name="password" value="masterkaoli" />
+	</bean>
+
+
+	<bean id="mappings"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+		<!-- typed as a java.util.Properties -->
+		<property name="properties">
+			<value>
+				jdbc.driver.className=com.mysql.jdbc.Driver
+				jdbc.url=jdbc:mysql://localhost:3306/mydb
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="outer" class="...">
+		<!-- instead of using a reference to a target bean, simply define the target 
+			bean inline -->
+		<property name="target">
+			<bean class="com.example.Person"> <!-- this is the inner bean -->
+				<property name="name" value="Fiona Apple" />
+				<property name="age" value="25" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="moreComplexObject" class="example.ComplexObject">
+		<!-- results in a setAdminEmails(java.util.Properties) call -->
+		<property name="adminEmails">
+			<props>
+				<prop key="administrator">administrator@example.org</prop>
+				<prop key="support">support@example.org</prop>
+				<prop key="development">development@example.org</prop>
+			</props>
+		</property>
+		<!-- results in a setSomeList(java.util.List) call -->
+		<property name="someList">
+			<list>
+				<value>a list element followed by a reference</value>
+				<ref bean="myDataSource" />
+			</list>
+		</property>
+		<!-- results in a setSomeMap(java.util.Map) call -->
+		<property name="someMap">
+			<map>
+				<entry key="an entry" value="just some string" />
+				<entry key="a ref" value-ref="myDataSource" />
+			</map>
+		</property>
+		<!-- results in a setSomeSet(java.util.Set) call -->
+		<property name="someSet">
+			<set>
+				<value>just some string</value>
+				<ref bean="myDataSource" />
+			</set>
+		</property>
+	</bean>
+
+	<bean id="foo" class="x.y.Foo">
+		<property name="accounts">
+			<map>
+				<entry key="one" value="9.99" />
+				<entry key="two" value="2.75" />
+				<entry key="six" value="3.99" />
+			</map>
+		</property>
+	</bean>
+
+	<bean class="ExampleBean">
+		<property name="email" value="" />
+	</bean>
+
+	<bean class="ExampleBean">
+		<property name="email">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="lazy" class="com.foo.ExpensiveToCreateBean" lazy-init="true" />
+
+	<bean name="not.lazy" class="com.foo.AnotherBean" />
+
+
+
+	<!-- The singleton scope is the default scope in Spring. To define a bean 
+		as a singleton in XML, you would write, for example: -->
+
+	<bean id="accountService" class="com.foo.DefaultAccountService" />
+
+	<!-- the following is equivalent, though redundant (singleton scope is the 
+		default) -->
+	<bean id="accountService" class="com.foo.DefaultAccountService"
+		scope="singleton" />
+
+	<!-- using spring-beans-2.0.dtd -->
+	<bean id="accountService" class="com.foo.DefaultAccountService"
+		scope="prototype" />
+
+	<bean id="loginAction" class="com.foo.LoginAction" scope="request" />
+
+	<bean id="userPreferences" class="com.foo.UserPreferences" scope="session" />
+
+	<bean id="userPreferences" class="com.foo.UserPreferences" scope="globalSession" />
+
+
+	<bean id="lifecycleProcessor"
+		class="org.springframework.context.support.DefaultLifecycleProcessor">
+		<!-- timeout value in milliseconds -->
+		<property name="timeoutPerShutdownPhase" value="10000" />
+	</bean>
+	
+</beans>
