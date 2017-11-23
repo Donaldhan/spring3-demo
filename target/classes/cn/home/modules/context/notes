@@ -1,6 +1,0 @@
-WebApplicationContext 
-BeanFactory 
-
-ClassPathXmlApplicationContext
-
-FileSystemXmlApplicationContext
