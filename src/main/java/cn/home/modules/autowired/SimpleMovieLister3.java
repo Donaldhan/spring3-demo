@@ -2,8 +2,7 @@ package cn.home.modules.autowired;
 
 import javax.annotation.Resource;
 
-
-import cn.home.modules.autowired.entity.MovieFinder;
+import cn.home.modules.autowired.dao.MovieFinder;
 
 /**
  * 

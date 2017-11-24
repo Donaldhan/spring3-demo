@@ -2,7 +2,7 @@ package cn.home.modules.autowired;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.home.modules.autowired.entity.MovieFinder;
+import cn.home.modules.autowired.dao.MovieFinder;
 
 /**
  * 

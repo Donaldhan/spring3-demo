@@ -16,6 +16,24 @@
 		DispatcherServlet” for more information. -->
 	<context:annotation-config />
 
+
+
+	<!-- The use of <context:component-scan> implicitly enables the functionality 
+		of <context:annotation-config>. There is usually no need to include the <context:annotation-config> 
+		element when using <context:component-scan>. Furthermore, the AutowiredAnnotationBeanPostProcessor 
+		and CommonAnnotationBeanPostProcessor are both included implicitly when you 
+		use the component-scan element. That means that the two components are autodetected 
+		and wired together - all without any bean configuration metadata provided 
+		in XML -->
+	<context:component-scan base-package="cn.home" />
+
+	<context:component-scan base-package="org.example">
+		<context:include-filter type="regex"
+			expression=".*Stub.*Repository" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+
 	<bean class="example.SimpleMovieCatalog">
 		<qualifier value="main" />
 		<!-- inject any dependencies required by this bean -->

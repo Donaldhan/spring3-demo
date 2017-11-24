@@ -1,8 +1,9 @@
 package cn.home.modules.autowired;
 
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Service;
 
-import cn.home.modules.autowired.entity.MovieFinder;
+import cn.home.modules.autowired.dao.MovieFinder;
 
 /**
  * This annotation simply indicates that the affected bean property must be
@@ -16,6 +17,7 @@ import cn.home.modules.autowired.entity.MovieFinder;
  * 
  * @author donald 2017年11月24日 上午10:07:08
  */
+@Service("myMovieLister")
 public class SimpleMovieLister {
 
 	private MovieFinder movieFinder;

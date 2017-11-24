@@ -1,0 +1,2 @@
+Spring应用上下文与Web赏析文的关系；
+为什么@Service注解的组件，应用上下文获取不到，是不是代理的原因，还是注解要带beanName,as @service("myService")
