@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- The implicitly registered post-processors include AutowiredAnnotationBeanPostProcessor, 
+		CommonAnnotationBeanPostProcessor, PersistenceAnnotationBeanPostProcessor, 
+		as well as the aforementioned RequiredAnnotationBeanPostProcessor . <context:annotation-config/> 
+		only looks for annotations on beans in the same application context in which 
+		it is defined. This means that, if you put <context:annotation-config/> in 
+		a WebApplicationContext for a DispatcherServlet, it only checks for @Autowired 
+		beans in your controllers, and not your services. See Section 17.2, “The 
+		DispatcherServlet” for more information. -->
+	<context:annotation-config />
+
+	<bean class="example.SimpleMovieCatalog">
+		<qualifier value="main" />
+		<!-- inject any dependencies required by this bean -->
+	</bean>
+
+	<bean class="example.SimpleMovieCatalog">
+		<qualifier value="action" />
+		<!-- inject any dependencies required by this bean -->
+	</bean>
+
+	<bean id="movieRecommender" class="example.MovieRecommender" />
+
+</beans>
