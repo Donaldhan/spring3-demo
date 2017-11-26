@@ -18,7 +18,7 @@ public class AnnotationConfigApplicationContextBoot {
 	private static final Logger log = LoggerFactory.getLogger(AnnotationConfigApplicationContextBoot.class); 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-	    ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+		ApplicationContext  ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 	    FooService fooService = ctx.getBean(FooService.class);
 	    log.info("fooService:{}",JacksonUtil.getInstance().toJson(fooService));
 	    fooService.doStuff(1);
