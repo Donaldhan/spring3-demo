@@ -31,7 +31,8 @@
  * ServletContextResource
  * InputStreamResource
  * ByteArrayResource
- * 
+ * JarURLConnection 
+ * ClassLoader
  * 
  * ResourceLoader
  * ResourceLoaderAware
