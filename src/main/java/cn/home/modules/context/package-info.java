@@ -25,6 +25,14 @@
  * RequestHandledEvent:DispatcherServlet
  * =============================
  * Resource 
+ * UrlResource
+ * ClassPathResource
+ * FileSystemResource
+ * ServletContextResource
+ * InputStreamResource
+ * ByteArrayResource
+ * 
+ * 
  * ResourceLoader
  * ResourceLoaderAware
  * PropertyEditor 
