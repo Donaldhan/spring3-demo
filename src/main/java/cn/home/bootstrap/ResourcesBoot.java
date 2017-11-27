@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-
 /**
  * All application contexts implement the ResourceLoader interface, and
  * therefore all application contexts may be used to obtain Resource instances.
@@ -41,6 +40,56 @@ import org.springframework.core.io.Resource;
  * 
  * Resource template =
  * ctx.getResource("http://myhost.com/resource/path/myTemplate.txt");
+ * 
+ * When constructing an XML-based application context, a location string may use
+ * the special classpath*: prefix:
+ * 
+ * ApplicationContext ctx = new
+ * ClassPathXmlApplicationContext("classpath*:conf/appContext.xml");
+ * 
+ * This special prefix specifies that all classpath resources that match the
+ * given name must be obtained (internally, this essentially happens via a
+ * ClassLoader.getResources(...) call), and then merged to form the final
+ * application context definition.
+ * 
+ * A FileSystemResource that is not attached to a FileSystemApplicationContext
+ * (that is, a FileSystemApplicationContext is not the actual ResourceLoader)
+ * will treat absolute vs. relative paths as you would expect. Relative paths
+ * are relative to the current working directory, while absolute paths are
+ * relative to the root of the filesystem.
+ * 
+ * For backwards compatibility (historical) reasons however, this changes when
+ * the FileSystemApplicationContext is the ResourceLoader. The
+ * FileSystemApplicationContext simply forces all attached FileSystemResource
+ * instances to treat all location paths as relative, whether they start with a
+ * leading slash or not. In practice, this means the following are equivalent:
+ * 
+ * ApplicationContext ctx = new
+ * FileSystemXmlApplicationContext("conf/context.xml");
+ * 
+ * ApplicationContext ctx = new
+ * FileSystemXmlApplicationContext("/conf/context.xml");
+ * 
+ * As are the following: (Even though it would make sense for them to be
+ * different, as one case is relative and the other absolute.)
+ * 
+ * FileSystemXmlApplicationContext ctx = ...;
+ * ctx.getResource("some/resource/path/myTemplate.txt");
+ * 
+ * FileSystemXmlApplicationContext ctx = ...;
+ * ctx.getResource("/some/resource/path/myTemplate.txt");
+ * 
+ * In practice, if true absolute filesystem paths are needed, it is better to
+ * forgo the use of absolute paths with FileSystemResource /
+ * FileSystemXmlApplicationContext, and just force the use of a UrlResource, by
+ * using the file: URL prefix.
+ * 
+ * // actual context type doesn't matter, the Resource will always be
+ * UrlResource ctx.getResource("file:/some/resource/path/myTemplate.txt");
+ * 
+ * // force this FileSystemXmlApplicationContext to load its definition via a
+ * UrlResource ApplicationContext ctx = new
+ * FileSystemXmlApplicationContext("file:/conf/context.xml");
  * 
  * @author donald 2017年11月26日 下午12:45:55
  */
