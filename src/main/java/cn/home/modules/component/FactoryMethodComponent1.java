@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.web.context.WebApplicationContext;
 
 public class FactoryMethodComponent1 {
 	private static int i;
@@ -23,8 +25,7 @@ public class FactoryMethodComponent1 {
 	      tb.setCountry(country);
 	      return tb;
 	  }
-      /*
-	  @Bean @Scope(BeanDefinition.SCOPE_SINGLETON)
+//	  @Bean @Scope(BeanDefinition.SCOPE_SINGLETON)
 	  private TestBean privateInstance() {
 	      return new TestBean("privateInstance", i++);
 	  }
@@ -34,5 +35,4 @@ public class FactoryMethodComponent1 {
 	  public TestBean requestScopedInstance() {
 	      return new TestBean("requestScopedInstance", 3);
 	  }
-	  */
 }
