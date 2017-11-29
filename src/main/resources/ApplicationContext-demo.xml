@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
            http://www.springframework.org/schema/aop 
-		   http://www.springframework.org/schema/aop/spring-aop.xsd">
+		   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		   http://www.springframework.org/schema/tx 
+		   http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -16,7 +18,7 @@
 		</property>
 	</bean>
 	<bean id="serviceStrategy" class="${custom.strategy.class}" />
-	
+
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations" value="classpath:jdbc.properties" />
@@ -218,5 +220,35 @@
 		<!-- timeout value in milliseconds -->
 		<property name="timeoutPerShutdownPhase" value="10000" />
 	</bean>
+	<!-- <aop:config>
+		<aop:advisor
+			pointcut="cn.home.moudles.aop.SystemArchitecture.businessService()"
+			advice-ref="tx-advice" />
+	</aop:config>
 
+	<tx:advice id="tx-advice">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice> -->
+
+	<!-- <aop:config> <aop:aspect id="myAspect" ref="aBean"> ... </aop:aspect> 
+		</aop:config> <bean id="aBean" class="..."> ... </bean> <aop:config> <aop:pointcut 
+		id="businessService" expression="execution(* com.xyz.myapp.service.*.*(..))" 
+		/> <aop:advisor pointcut-ref="businessService" advice-ref="tx-advice" /> 
+		<aop:pointcut id="businessService" expression="com.xyz.myapp.SystemArchitecture.businessService()" 
+		/> <aop:before pointcut-ref="businessService" method="monitor" /> <aop:after-returning 
+		pointcut-ref="dataAccessOperation" method="doAccessCheck" /> <aop:after-returning 
+		pointcut-ref="dataAccessOperation" returning="retVal" method="doAccessCheck" 
+		/> <aop:after-throwing pointcut-ref="dataAccessOperation" method="doRecoveryActions" 
+		/> <aop:after-throwing pointcut-ref="dataAccessOperation" throwing="dataAccessEx" 
+		method="doRecoveryActions" /> <aop:after pointcut-ref="dataAccessOperation" 
+		method="doReleaseLock" /> <aop:around pointcut-ref="businessService" method="doBasicProfiling" 
+		/> </aop:config> <aop:config> <aop:aspect id="concurrentOperationRetry" ref="concurrentOperationExecutor"> 
+		<aop:pointcut id="idempotentOperation" expression="execution(* com.xyz.myapp.service.*.*(..))" 
+		/> <aop:around pointcut-ref="idempotentOperation" method="doConcurrentOperation" 
+		/> </aop:aspect> </aop:config> <bean id="concurrentOperationExecutor" class="com.xyz.myapp.service.impl.ConcurrentOperationExecutor"> 
+		<property name="maxRetries" value="3" /> <property name="order" value="100" 
+		/> </bean> -->
+	<tx:annotation-driven />
 </beans>
