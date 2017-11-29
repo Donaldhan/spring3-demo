@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
@@ -11,7 +12,9 @@ import org.springframework.util.ClassUtils;
 import cn.home.modules.beans.service.FooService;
 import cn.home.modules.beans.service.impl.FooServiceImpl;
 
+
 @Configuration
+@EnableAspectJAutoProxy
 public class AppConfig {
 	
     private @Value("#{jdbc.url}") String jdbcUrl;
