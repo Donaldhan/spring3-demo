@@ -7,5 +7,7 @@ public interface MenuService {
 
 	public abstract void updateMenu(Menu menu);
 
-	public abstract void deleteMenu(Menu menu);
+	public abstract void deleteMenu(Integer menuId);
+	
+	public abstract Menu findMenu(Integer menuId); 
 }

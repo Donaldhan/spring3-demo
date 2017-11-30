@@ -21,7 +21,11 @@
  * @Transactional 
  * @EnableTransactionManagement
  * TransactionInterceptor 
- * 
+ * TransactionManagementConfigurer
+ * Propagation
+ * UnexpectedRollbackException 
+ * TransactionTemplate
+ * TransactionCallback 
  * @author donald 2017年11月30日 下午3:28:33
  */
 package cn.home.modules.transaction;

@@ -16,6 +16,8 @@
 		<junit.version>4.12</junit.version>
 		<aspectjrt.version>1.5.4</aspectjrt.version>
 		<aspectjweaver.version>1.7.2</aspectjweaver.version>
+		<mysql.connector.java.version>5.1.29</mysql.connector.java.version>
+		<druid.version>1.0.13</druid.version>
 	</properties>
 	<repositories>
 		<!-- <repository> <id>nexus</id> <name>local nexus server</name> <url>http://192.168.200.92:8081/nexus/content/groups/public</url> 
@@ -80,6 +82,7 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -94,6 +97,19 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.java.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+        <!-- 连接池 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

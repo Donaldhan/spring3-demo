@@ -8,7 +8,7 @@
            http://www.springframework.org/schema/aop 
 		   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
 		   http://www.springframework.org/schema/tx 
-		   http://www.springframework.org/schema/tx/spring-tx-3.2.xsd" >
+		   http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -31,6 +31,32 @@
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
+	<!-- transaction support ,PlatformTransactionMnager -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 开启事务注解时，屏蔽tx:advice，aop:config -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="edit*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="UnsupportedOperationException"/>
+			<tx:method name="remove*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="serviceOperation"
+			expression="execution(* cn.home.modules.*.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+	</aop:config>
+	<!-- enable transaction annotation support，开始事务注解配置，手动控制那些方法或类需要进行事务控制，
+	当开启事务注解时，需要屏蔽上面的tx:advice和aop:config标签的事务声明 -->
+	<!-- <tx:annotation-driven transaction-manager="txManager" />  -->
 	<bean id="..." class="...">
 		<!-- collaborators and configuration for this bean go here -->
 	</bean>
