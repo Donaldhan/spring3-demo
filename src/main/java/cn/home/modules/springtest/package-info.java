@@ -8,7 +8,7 @@
  * 
  * JdbcTestUtils
  * ApplicationContext 
- * WebApplicationContext 
+ * WebApplicationContext --> DispatcherServlet
  * 
  * ContextConfiguration 
  * ContextHierarchy
