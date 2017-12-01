@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-	xmlns:aop="http://www.springframework.org/schema/aop" 
-	xmlns:tx="http://www.springframework.org/schema/tx" 
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
            http://www.springframework.org/schema/aop 
@@ -37,16 +36,22 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 开启事务注解时，屏蔽tx:advice，aop:config -->
-    <tx:advice id="txAdvice" transaction-manager="txManager">
+	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
-			<tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
-			<tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
-			<tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
-			<tx:method name="edit*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
-			<tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="UnsupportedOperationException"/>
-			<tx:method name="remove*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="edit*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="UnsupportedOperationException" />
+			<tx:method name="remove*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
@@ -54,9 +59,9 @@
 			expression="execution(* cn.home.modules.*.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
-	<!-- enable transaction annotation support，开始事务注解配置，手动控制那些方法或类需要进行事务控制，
-	当开启事务注解时，需要屏蔽上面的tx:advice和aop:config标签的事务声明 -->
-	<!-- <tx:annotation-driven transaction-manager="txManager" />  -->
+	<!-- enable transaction annotation support，开始事务注解配置，手动控制那些方法或类需要进行事务控制， 
+		当开启事务注解时，需要屏蔽上面的tx:advice和aop:config标签的事务声明 -->
+	<!-- <tx:annotation-driven transaction-manager="txManager" /> -->
 	<bean id="..." class="...">
 		<!-- collaborators and configuration for this bean go here -->
 	</bean>
@@ -259,23 +264,42 @@
 		</tx:attributes>
 	</tx:advice>
 
-	<!-- <aop:config> <aop:aspect id="myAspect" ref="aBean"> ... </aop:aspect> 
-		</aop:config> <bean id="aBean" class="..."> ... </bean> <aop:config> <aop:pointcut 
-		id="businessService" expression="execution(* com.xyz.myapp.service.*.*(..))" 
-		/> <aop:advisor pointcut-ref="businessService" advice-ref="tx-advice" /> 
-		<aop:pointcut id="businessService" expression="com.xyz.myapp.SystemArchitecture.businessService()" 
-		/> <aop:before pointcut-ref="businessService" method="monitor" /> <aop:after-returning 
-		pointcut-ref="dataAccessOperation" method="doAccessCheck" /> <aop:after-returning 
-		pointcut-ref="dataAccessOperation" returning="retVal" method="doAccessCheck" 
-		/> <aop:after-throwing pointcut-ref="dataAccessOperation" method="doRecoveryActions" 
-		/> <aop:after-throwing pointcut-ref="dataAccessOperation" throwing="dataAccessEx" 
-		method="doRecoveryActions" /> <aop:after pointcut-ref="dataAccessOperation" 
-		method="doReleaseLock" /> <aop:around pointcut-ref="businessService" method="doBasicProfiling" 
-		/> </aop:config> <aop:config> <aop:aspect id="concurrentOperationRetry" ref="concurrentOperationExecutor"> 
-		<aop:pointcut id="idempotentOperation" expression="execution(* com.xyz.myapp.service.*.*(..))" 
-		/> <aop:around pointcut-ref="idempotentOperation" method="doConcurrentOperation" 
-		/> </aop:aspect> </aop:config> <bean id="concurrentOperationExecutor" class="com.xyz.myapp.service.impl.ConcurrentOperationExecutor"> 
-		<property name="maxRetries" value="3" /> <property name="order" value="100" 
-		/> </bean> -->
+	<!-- <aop:config>
+		<aop:aspect id="myAspect" ref="aBean">
+			...
+		</aop:aspect>
+	</aop:config>
+	<bean id="aBean" class="...">
+		...
+	</bean>
+	<aop:config>
+		<aop:pointcut id="businessService"
+			expression="execution(* com.xyz.myapp.service.*.*(..))" />
+		<aop:advisor pointcut-ref="businessService" advice-ref="tx-advice" />
+		<aop:pointcut id="businessService"
+			expression="com.xyz.myapp.SystemArchitecture.businessService()" />
+		<aop:before pointcut-ref="businessService" method="monitor" />
+		<aop:after-returning pointcut-ref="dataAccessOperation"
+			method="doAccessCheck" />
+		<aop:after-returning pointcut-ref="dataAccessOperation"
+			returning="retVal" method="doAccessCheck" />
+		<aop:after-throwing pointcut-ref="dataAccessOperation"
+			method="doRecoveryActions" />
+		<aop:after-throwing pointcut-ref="dataAccessOperation"
+			throwing="dataAccessEx" method="doRecoveryActions" />
+		<aop:after pointcut-ref="dataAccessOperation" method="doReleaseLock" />
+		<aop:around pointcut-ref="businessService" method="doBasicProfiling" />
+	</aop:config>
+	<aop:config>
+		<aop:aspect id="concurrentOperationRetry" ref="concurrentOperationExecutor">
+			<aop:pointcut id="idempotentOperation"
+				expression="execution(* com.xyz.myapp.service.*.*(..))" />
+			<aop:around pointcut-ref="idempotentOperation" method="doConcurrentOperation" />
+		</aop:aspect>
+	</aop:config>
+	<bean id="concurrentOperationExecutor" class="com.xyz.myapp.service.impl.ConcurrentOperationExecutor">
+		<property name="maxRetries" value="3" />
+		<property name="order" value="100" />
+	</bean> -->
 	<tx:annotation-driven />
 </beans>
