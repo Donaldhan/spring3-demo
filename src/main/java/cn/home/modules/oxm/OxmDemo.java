@@ -1,5 +1,6 @@
 package cn.home.modules.oxm;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,12 +38,20 @@ public class OxmDemo {
 	}
 
 	public void saveSettings() throws IOException {
+		File file = new File(FILE_NAME);
 		FileOutputStream os = null;
 		try {
-			os = new FileOutputStream(FILE_NAME);
+//			os = new FileOutputStream(FILE_NAME);
+			if(!file.exists()){
+				file.createNewFile();
+			}
+			os = new FileOutputStream(file);
 			this.marshaller.marshal(settings, new StreamResult(os));
 			log.info("object to xml is ok...");
-		} finally {
+		} 
+		catch(Exception e){
+			log.error("object to xml 异常：",e);
+		}finally {
 			if (os != null) {
 				os.close();
 			}
@@ -55,7 +64,10 @@ public class OxmDemo {
 			is = new FileInputStream(FILE_NAME);
 			this.settings = (Settings) this.unmarshaller.unmarshal(new StreamSource(is));
 			log.info("xml to object is ok:\n{}",JacksonUtil.getInstance().toJson(settings));
-		} finally {
+		} 
+		catch(Exception e){
+			log.error("xml to  object异常：",e);
+		}finally {
 			if (is != null) {
 				is.close();
 			}
@@ -70,5 +82,6 @@ public class OxmDemo {
 		oxmDemo.settings.setFooEnabled(true);
 		oxmDemo.saveSettings();
 		oxmDemo.loadSettings();
+		
 	}
 }

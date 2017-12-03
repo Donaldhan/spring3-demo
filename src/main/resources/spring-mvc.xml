@@ -14,11 +14,11 @@
 	<!-- autowired controller -->
 	<context:annotation-config />
 	<!-- scan component and add applicationContext -->
-	<context:component-scan base-package="cn.home" />
+	<context:component-scan base-package="cn.home.modules.webmvc.controller" />
 	<!-- model model binding conversion, JSR-303 support will be detected on 
 		classpath and enabled automatically -->
 	<mvc:annotation-driven />
-		<!-- To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element: -->
+	<!-- To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element: -->
 	<aop:aspectj-autoproxy />
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
 	
