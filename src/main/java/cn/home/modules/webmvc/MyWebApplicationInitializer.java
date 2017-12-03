@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
@@ -13,8 +14,11 @@ import org.springframework.web.servlet.DispatcherServlet;
  */
 public class MyWebApplicationInitializer implements WebApplicationInitializer {
 
+	@SuppressWarnings("resource")
 	@Override
 	public void onStartup(ServletContext container) {
+		XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+		appContext.setConfigLocation("classpath:spring-config.xml");
 		ServletRegistration.Dynamic registration = container.addServlet("springmvc", new DispatcherServlet());
 		registration.setLoadOnStartup(1);
 		registration.addMapping("*.do");

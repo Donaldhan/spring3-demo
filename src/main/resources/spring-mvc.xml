@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	http://www.springframework.org/schema/mvc
@@ -11,16 +11,65 @@
 	http://www.springframework.org/schema/context/spring-context-3.2.xsd
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
 	<!-- autowired controller -->
 	<context:annotation-config />
 	<!-- scan component and add applicationContext -->
 	<context:component-scan base-package="cn.home.modules.webmvc.controller" />
+	<!-- It configures a DefaultServletHttpRequestHandler with a URL mapping 
+		of "/**" and the lowest priority relative to other URL mappings. This handler 
+		will forward all requests to the default Servlet. -->
+	<mvc:default-servlet-handler/>
 	<!-- model model binding conversion, JSR-303 support will be detected on 
 		classpath and enabled automatically -->
-	<mvc:annotation-driven />
-	<!-- To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element: -->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<ref bean="stringHttpMessageConverter" />
+			<ref bean="mappingJacksonHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 从请求和响应读取/编写字符串。默认情况下，它支持媒体类型 text/* 并使用文本/无格式内容类型编写。 -->
+	<bean id="stringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/plain;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 使用 Jackson 的 ObjectMapper 读取/编写 JSON 数据。它转换媒体类型为 application/json 的数据。 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+		<property name="objectMapper">
+			<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+				<property name="serializationInclusion">
+					<value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/admin/**" />
+			<bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/secure/*" />
+			<bean class="cn.home.modules.webmvc.interceptor.SecurityInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy 
+		element: -->
 	<aop:aspectj-autoproxy />
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
-	
-    
+
+
 </beans>

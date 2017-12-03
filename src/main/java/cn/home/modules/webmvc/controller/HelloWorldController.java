@@ -81,38 +81,60 @@ public class HelloWorldController {
 	@RequestMapping
 	public String myHandleMethod(WebRequest webRequest, Model model) {
 
-	    long lastModified = 0L;// 1. application-specific calculation
+		long lastModified = 0L;// 1. application-specific calculation
 
-	   /* if (request.checkNotModified(lastModified)) {
-	        // 2. shortcut exit - no further processing necessary
-	        return null;
-	     }*/
+		/*
+		 * if (request.checkNotModified(lastModified)) { // 2. shortcut exit -
+		 * no further processing necessary return null; }
+		 */
 
-	    // 3. or otherwise further request processing, actually preparing content
-	    model.addAttribute("","");
-	    return "myViewName";
+		// 3. or otherwise further request processing, actually preparing
+		// content
+		model.addAttribute("", "");
+		return "myViewName";
 	}
-	@RequestMapping(method=RequestMethod.POST)
+
+	@RequestMapping(method = RequestMethod.POST)
 	public Callable<String> processUpload(final MultipartFile file) {
-	  return new Callable<String>() {
-	    public String call() throws Exception {
-	      // ...
-	      return "someView";
-	    }
-	  };
+		return new Callable<String>() {
+			public String call() throws Exception {
+				// ...
+				return "someView";
+			}
+		};
 	}
+
 	/**
-	 * // In some other thread..
-	 * deferredResult.setResult(data);
+	 * // In some other thread.. deferredResult.setResult(data);
+	 * 
 	 * @return
 	 */
 	@RequestMapping("/quotes")
 	@ResponseBody
 	public DeferredResult<String> quotes() {
-	  DeferredResult<String> deferredResult = new DeferredResult<String>();
-	  // Save the deferredResult in in-memory queue ...
-	  return deferredResult;
+		DeferredResult<String> deferredResult = new DeferredResult<String>();
+		// Save the deferredResult in in-memory queue ...
+		return deferredResult;
 	}
 
-	
+	/**
+	 * If a view name is returned that has the prefix redirect:, the
+	 * UrlBasedViewResolver (and all subclasses) will recognize this as a
+	 * special indication that a redirect is needed. The rest of the view name
+	 * will be treated as the redirect URL. The net effect is the same as if the
+	 * controller had returned a RedirectView, but now the controller itself can
+	 * simply operate in terms of logical view names. A logical view name such
+	 * as redirect:/myapp/some/resource will redirect relative to the current
+	 * Servlet context, while a name such as
+	 * redirect:http://myhost.com/some/arbitrary/path will redirect to an
+	 * absolute URL.
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/files/{path}", method = RequestMethod.POST)
+	public String upload() {
+		// ...
+		return "redirect:files/{path}";
+	}
+
 }
