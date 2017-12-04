@@ -66,6 +66,7 @@
 			<bean class="cn.home.modules.webmvc.interceptor.SecurityInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
+	<bean id="exceptionResolver" class="cn.home.modules.webmvc.exception.GlobalHandlerExceptionResolver"></bean>
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
