@@ -17,7 +17,7 @@
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
-			<value>classpath:jdbc.properties</value>
+			<value>classpath*:jdbc.properties</value>
 		</property>
 	</bean>
 	<!-- 阿里 druid数据库连接池 -->
@@ -58,7 +58,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 开启事务注解时，屏蔽tx:advice，aop:config -->
-<!-- 	<tx:advice id="txAdvice" transaction-manager="txManager">
+	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
@@ -74,8 +74,8 @@
 		<aop:pointcut id="serviceOperation"
 			expression="execution(* cn.home.modules.*.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
-	</aop:config> -->
+	</aop:config>
 	<!-- enable transaction annotation support，开始事务注解配置，手动控制那些方法或类需要进行事务控制，
 	当开启事务注解时，需要屏蔽上面的tx:advice和aop:config标签的事务声明 -->
-	<tx:annotation-driven transaction-manager="txManager" /> 
+	<!-- 	<tx:annotation-driven transaction-manager="txManager" />  -->
 </beans>
